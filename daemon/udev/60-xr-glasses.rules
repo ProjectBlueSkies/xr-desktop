@@ -1,5 +1,25 @@
-# Viture XR Pro — grant HID access to the plugdev group
-# Install to /etc/udev/rules.d/ then: sudo udevadm control --reload-rules && sudo udevadm trigger
+# Viture XR glasses — grant HID/USB access to the plugdev group.
+# Install:  sudo cp 60-xr-glasses.rules /etc/udev/rules.d/
+#           sudo udevadm control --reload-rules && sudo udevadm trigger
 
-SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1011", MODE="0660", GROUP="plugdev"
-SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1010", MODE="0660", GROUP="plugdev"
+# One / One Lite
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1011", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1013", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1015", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1017", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="101b", MODE="0660", GROUP="plugdev"
+# Pro
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1019", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="101d", MODE="0660", GROUP="plugdev"
+# Luma / Luma Pro / Luma Ultra / Luma Cyber
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1131", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1121", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1141", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1101", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1104", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1151", MODE="0660", GROUP="plugdev"
+# Beast
+SUBSYSTEM=="usb", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1201", MODE="0660", GROUP="plugdev"
+
+# hidraw nodes (needed by libglasses.so for USB control commands)
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35ca", MODE="0660", GROUP="plugdev"

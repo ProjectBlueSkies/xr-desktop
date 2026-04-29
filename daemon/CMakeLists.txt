@@ -5,9 +5,12 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(HIDAPI REQUIRED hidapi-libusb)
-pkg_check_modules(UDEV   REQUIRED libudev)
-pkg_check_modules(EVDEV  REQUIRED libevdev)
+pkg_check_modules(UDEV REQUIRED libudev)
+
+set(VITURE_SDK_DIR     ${CMAKE_SOURCE_DIR}/upstream/lib/x86_64/viture)
+set(VITURE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/upstream/include/sdks)
+
+# ── daemon ────────────────────────────────────────────────────────────────────
 
 add_executable(xr-imu-daemon
     src/main.c
@@ -16,18 +19,34 @@ add_executable(xr-imu-daemon
 )
 
 target_include_directories(xr-imu-daemon PRIVATE
-    ${HIDAPI_INCLUDE_DIRS}
     ${UDEV_INCLUDE_DIRS}
-    ${EVDEV_INCLUDE_DIRS}
+    ${VITURE_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/../shared
 )
 
-target_link_libraries(xr-imu-daemon
-    ${HIDAPI_LIBRARIES}
+target_link_libraries(xr-imu-daemon PRIVATE
     ${UDEV_LIBRARIES}
-    ${EVDEV_LIBRARIES}
+    ${VITURE_SDK_DIR}/libglasses.so
+    rt
     m
 )
 
+# Embed RPATH so the binary can find libglasses.so at both build and install time
+set_target_properties(xr-imu-daemon PROPERTIES
+    BUILD_RPATH  "${VITURE_SDK_DIR}"
+    INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib/xr-desktop"
+)
+
+# ── imu-test ──────────────────────────────────────────────────────────────────
+
+add_executable(imu-test tools/imu-test.c)
+target_include_directories(imu-test PRIVATE ${CMAKE_SOURCE_DIR}/../shared)
+target_link_libraries(imu-test PRIVATE rt)
+
+# ── install ───────────────────────────────────────────────────────────────────
+
 install(TARGETS xr-imu-daemon DESTINATION bin)
-install(FILES udev/60-xr-glasses.rules DESTINATION /etc/udev/rules.d)
+install(FILES ${VITURE_SDK_DIR}/libglasses.so
+        DESTINATION lib/xr-desktop)
+install(FILES udev/60-xr-glasses.rules
+        DESTINATION /etc/udev/rules.d)
