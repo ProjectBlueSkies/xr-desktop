@@ -1,0 +1,5 @@
+# Viture XR Pro — grant HID access to the plugdev group
+# Install to /etc/udev/rules.d/ then: sudo udevadm control --reload-rules && sudo udevadm trigger
+
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1011", MODE="0660", GROUP="plugdev"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35ca", ATTRS{idProduct}=="1010", MODE="0660", GROUP="plugdev"

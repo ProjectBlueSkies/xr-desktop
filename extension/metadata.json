@@ -1,0 +1,9 @@
+{
+  "name": "XR Virtual Desktop",
+  "description": "World-locked virtual desktop for Viture XR Pro glasses on GNOME 46",
+  "uuid": "xr-desktop@projectblueskies",
+  "version": 1,
+  "shell-version": ["46"],
+  "url": "https://github.com/ProjectBlueSkies/xr-desktop",
+  "settings-schema": "org.gnome.shell.extensions.xr-desktop"
+}

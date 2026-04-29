@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.xr-desktop"
+          path="/org/gnome/shell/extensions/xr-desktop/">
+
+    <!-- Phase 5 settings — stubbed for now -->
+    <key name="recenter-hotkey" type="s">
+      <default>'&lt;Super&gt;space'</default>
+      <summary>Recenter hotkey</summary>
+    </key>
+    <key name="screen-distance" type="d">
+      <default>2.0</default>
+      <summary>Virtual screen distance in metres</summary>
+    </key>
+    <key name="curved-screen" type="b">
+      <default>false</default>
+      <summary>Enable cylindrical projection</summary>
+    </key>
+
+  </schema>
+</schemalist>

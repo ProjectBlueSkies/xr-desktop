@@ -1,0 +1,25 @@
+# C build artifacts
+daemon/build/
+*.o
+*.a
+*.so
+*.out
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# GNOME extension compiled schemas
+extension/schemas/gschemas.compiled
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
