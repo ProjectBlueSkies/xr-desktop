@@ -4,8 +4,11 @@ project(xr-imu-daemon VERSION 0.1.0 LANGUAGES C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(UDEV REQUIRED libudev)
+find_path(UDEV_INCLUDE_DIR libudev.h)
+find_library(UDEV_LIBRARY udev)
+if(NOT UDEV_INCLUDE_DIR OR NOT UDEV_LIBRARY)
+    message(FATAL_ERROR "libudev not found — install libudev-dev")
+endif()
 
 set(VITURE_SDK_DIR     ${CMAKE_SOURCE_DIR}/upstream/lib/x86_64/viture)
 set(VITURE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/upstream/include/sdks)
@@ -19,13 +22,13 @@ add_executable(xr-imu-daemon
 )
 
 target_include_directories(xr-imu-daemon PRIVATE
-    ${UDEV_INCLUDE_DIRS}
+    ${UDEV_INCLUDE_DIR}
     ${VITURE_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/../shared
 )
 
 target_link_libraries(xr-imu-daemon PRIVATE
-    ${UDEV_LIBRARIES}
+    ${UDEV_LIBRARY}
     ${VITURE_SDK_DIR}/libglasses.so
     rt
     m
