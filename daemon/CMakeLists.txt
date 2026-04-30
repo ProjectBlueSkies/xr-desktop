@@ -39,6 +39,9 @@ set_target_properties(xr-imu-daemon PROPERTIES
     BUILD_RPATH  "${VITURE_SDK_DIR}"
     INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib/xr-desktop"
 )
+# Use DT_RPATH (not DT_RUNPATH) so the path propagates to transitive deps
+# (libglasses.so loads bundled OpenCV libs from the same directory)
+target_link_options(xr-imu-daemon PRIVATE -Wl,--disable-new-dtags)
 
 # ── imu-test ──────────────────────────────────────────────────────────────────
 
